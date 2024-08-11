@@ -1,77 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Exchange Calculator</title>
+    <title>貨幣兌換計算器</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Currency Exchange Calculator</h1>
+        <h1 class="text-center">貨幣兌換計算器</h1>
         <form id="exchangeForm">
             <div class="row mb-3">
                 <div class="col">
-                    <label for="c_d_ratio" class="form-label">C:D Ratio</label>
-                    <input type="text" class="form-control" id="c_d_ratio" placeholder="Enter C:D ratio (e.g., 172)">
+                    <label for="c_d_ratio" class="form-label">C:D 比率</label>
+                    <input type="text" class="form-control" id="c_d_ratio" placeholder="輸入 C:D 比率 (例如: 172)">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <label for="c_x_buy" class="form-label">C:X Buy Price</label>
-                    <input type="text" class="form-control" id="c_x_buy" placeholder="Enter C:X buy price (e.g., 3)">
+                    <label for="c_x_buy" class="form-label">C:X 買價</label>
+                    <input type="text" class="form-control" id="c_x_buy" placeholder="輸入 C:X 買價 (例如: 3)">
                 </div>
                 <div class="col">
-                    <label for="c_x_sell" class="form-label">C:X Sell Price</label>
-                    <input type="text" class="form-control" id="c_x_sell" placeholder="Enter C:X sell price (e.g., 2)">
+                    <label for="c_x_sell" class="form-label">C:X 賣價</label>
+                    <input type="text" class="form-control" id="c_x_sell" placeholder="輸入 C:X 賣價 (例如: 2)">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <label for="d_x_buy" class="form-label">D:X Buy Price</label>
-                    <input type="text" class="form-control" id="d_x_buy" placeholder="Enter D:X buy price (e.g., 1/52)">
+                    <label for="d_x_buy" class="form-label">D:X 買價</label>
+                    <input type="text" class="form-control" id="d_x_buy" placeholder="輸入 D:X 買價 (例如: 1/52)">
                 </div>
                 <div class="col">
-                    <label for="d_x_sell" class="form-label">D:X Sell Price</label>
-                    <input type="text" class="form-control" id="d_x_sell" placeholder="Enter D:X sell price (e.g., 1/53)">
+                    <label for="d_x_sell" class="form-label">D:X 賣價</label>
+                    <input type="text" class="form-control" id="d_x_sell" placeholder="輸入 D:X 賣價 (例如: 1/53)">
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" onclick="calculateExchange()">Calculate</button>
+            <button type="button" class="btn btn-primary" onclick="calculateExchange()">計算</button>
         </form>
 
         <div class="mt-4">
-            <h3>Results</h3>
+            <h3>結果</h3>
             <ul class="list-group">
-                <li class="list-group-item" id="cBuyDSellItem"><strong>C买D卖:</strong>
+                <li class="list-group-item" id="cBuyDSellItem"><strong>C買D賣:</strong>
                     <ul>
-                        <li>汇率: <span id="cBuyDSellRate">-</span></li>
-                        <li>单位买价: <span id="cBuyDSellBuyPrice">-</span></li>
-                        <li>单位卖价: <span id="cBuyDSellSellPrice">-</span></li>
-                        <li>单位获利或亏损: <span id="cBuyDSellProfitLoss">-</span></li>
+                        <li>匯率: <span id="cBuyDSellRate">-</span></li>
+                        <li>單位買價: <span id="cBuyDSellBuyPrice">-</span></li>
+                        <li>單位賣價: <span id="cBuyDSellSellPrice">-</span></li>
+                        <li>單位獲利或虧損: <span id="cBuyDSellProfitLoss">-</span></li>
                     </ul>
                 </li>
-                <li class="list-group-item" id="cBuyCSellItem"><strong>C买C卖:</strong>
+                <li class="list-group-item" id="cBuyCSellItem"><strong>C買C賣:</strong>
                     <ul>
-                        <li>汇率: <span id="cBuyCSellRate">-</span></li>
-                        <li>单位买价: <span id="cBuyCSellBuyPrice">-</span></li>
-                        <li>单位卖价: <span id="cBuyCSellSellPrice">-</span></li>
-                        <li>单位获利或亏损: <span id="cBuyCSellProfitLoss">-</span></li>
+                        <li>匯率: <span id="cBuyCSellRate">-</span></li>
+                        <li>單位買價: <span id="cBuyCSellBuyPrice">-</span></li>
+                        <li>單位賣價: <span id="cBuyCSellSellPrice">-</span></li>
+                        <li>單位獲利或虧損: <span id="cBuyCSellProfitLoss">-</span></li>
                     </ul>
                 </li>
-                <li class="list-group-item" id="dBuyCSellItem"><strong>D买C卖:</strong>
+                <li class="list-group-item" id="dBuyCSellItem"><strong>D買C賣:</strong>
                     <ul>
-                        <li>汇率: <span id="dBuyCSellRate">-</span></li>
-                        <li>单位买价: <span id="dBuyCSellBuyPrice">-</span></li>
-                        <li>单位卖价: <span id="dBuyCSellSellPrice">-</span></li>
-                        <li>单位获利或亏损: <span id="dBuyCSellProfitLoss">-</span></li>
+                        <li>匯率: <span id="dBuyCSellRate">-</span></li>
+                        <li>單位買價: <span id="dBuyCSellBuyPrice">-</span></li>
+                        <li>單位賣價: <span id="dBuyCSellSellPrice">-</span></li>
+                        <li>單位獲利或虧損: <span id="dBuyCSellProfitLoss">-</span></li>
                     </ul>
                 </li>
-                <li class="list-group-item" id="dBuyDSellItem"><strong>D买D卖:</strong>
+                <li class="list-group-item" id="dBuyDSellItem"><strong>D買D賣:</strong>
                     <ul>
-                        <li>汇率: <span id="dBuyDSellRate">-</span></li>
-                        <li>单位买价: <span id="dBuyDSellBuyPrice">-</span></li>
-                        <li>单位卖价: <span id="dBuyDSellSellPrice">-</span></li>
-                        <li>单位获利或亏损: <span id="dBuyDSellProfitLoss">-</span></li>
+                        <li>匯率: <span id="dBuyDSellRate">-</span></li>
+                        <li>單位買價: <span id="dBuyDSellBuyPrice">-</span></li>
+                        <li>單位賣價: <span id="dBuyDSellSellPrice">-</span></li>
+                        <li>單位獲利或虧損: <span id="dBuyDSellProfitLoss">-</span></li>
                     </ul>
                 </li>
             </ul>
@@ -88,7 +88,7 @@
         }
 
         function calculateExchange() {
-            // 获取输入值，并将其转换为数值
+            // 獲取輸入值，並將其轉換為數值
             const c_d_ratio = evaluateExpression(document.getElementById('c_d_ratio').value);
             const c_x_buy = evaluateExpression(document.getElementById('c_x_buy').value);
             const c_x_sell = evaluateExpression(document.getElementById('c_x_sell').value);
@@ -96,40 +96,40 @@
             const d_x_sell = evaluateExpression(document.getElementById('d_x_sell').value);
 
             if (isNaN(c_d_ratio) || isNaN(c_x_buy) || isNaN(c_x_sell) || isNaN(d_x_buy) || isNaN(d_x_sell)) {
-                alert("Please enter valid numbers or fractions.");
+                alert("請輸入有效的數字或分數格式。");
                 return;
             }
 
-            // 将D:X的买价和卖价转换为以C为单位
+            // 將D:X的買價和賣價轉換為以C為單位
             const d_x_buy_in_c = d_x_buy * c_d_ratio;
             const d_x_sell_in_c = d_x_sell * c_d_ratio;
 
-            // 计算C买D卖
+            // 計算C買D賣
             const c_buy_d_sell_rate = c_x_buy / d_x_sell_in_c;
             const c_buy_d_sell_profit_loss = d_x_sell_in_c - c_x_buy;
 
-            // 计算C买C卖
+            // 計算C買C賣
             const c_buy_c_sell_rate = c_x_buy / c_x_sell;
             const c_buy_c_sell_profit_loss = c_x_sell - c_x_buy;
 
-            // 计算D买C卖
+            // 計算D買C賣
             const d_buy_c_sell_rate = d_x_buy_in_c / c_x_sell;
             const d_buy_c_sell_profit_loss = c_x_sell - d_x_buy_in_c;
 
-            // 计算D买D卖
+            // 計算D買D賣
             const d_buy_d_sell_rate = d_x_buy_in_c / d_x_sell_in_c;
             const d_buy_d_sell_profit_loss = d_x_sell_in_c - d_x_buy_in_c;
 
-            // 找出最高利润的项目
+            // 找出最高利潤的項目
             const maxProfit = Math.max(c_buy_d_sell_profit_loss, c_buy_c_sell_profit_loss, d_buy_c_sell_profit_loss, d_buy_d_sell_profit_loss);
 
-            // 重置所有项的高亮样式
+            // 重置所有項目的高亮樣式
             document.getElementById('cBuyDSellItem').classList.remove('bg-success', 'text-white');
             document.getElementById('cBuyCSellItem').classList.remove('bg-success', 'text-white');
             document.getElementById('dBuyCSellItem').classList.remove('bg-success', 'text-white');
             document.getElementById('dBuyDSellItem').classList.remove('bg-success', 'text-white');
 
-            // 根据最大利润高亮对应的项
+            // 根據最大利潤高亮對應的項目
             if (c_buy_d_sell_profit_loss === maxProfit) {
                 document.getElementById('cBuyDSellItem').classList.add('bg-success', 'text-white');
             } else if (c_buy_c_sell_profit_loss === maxProfit) {
@@ -140,7 +140,7 @@
                 document.getElementById('dBuyDSellItem').classList.add('bg-success', 'text-white');
             }
 
-            // 显示结果
+            // 顯示結果
             document.getElementById('cBuyDSellRate').textContent = c_buy_d_sell_rate.toFixed(4);
             document.getElementById('cBuyDSellBuyPrice').textContent = c_x_buy.toFixed(4);
             document.getElementById('cBuyDSellSellPrice').textContent = d_x_sell_in_c.toFixed(4);
