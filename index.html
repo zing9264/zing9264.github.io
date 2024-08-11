@@ -1,196 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-
-  
-  <title>Zing&#39;s Site</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Zing&#39;s Site">
-<meta property="og:url" content="https://zing9264.github.io/index.html">
-<meta property="og:site_name" content="Zing&#39;s Site">
-<meta property="og:locale" content="zh_TW">
-<meta property="article:author" content="Zing">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Zing&#39;s Site" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-<meta name="generator" content="Hexo 5.1.1"></head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Exchange Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Zing&#39;s Site</a>
-      </h1>
-      
+    <div class="container mt-5">
+        <h1 class="text-center">Currency Exchange Calculator</h1>
+        <form id="exchangeForm">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="c_d_ratio" class="form-label">C:D Ratio</label>
+                    <input type="text" class="form-control" id="c_d_ratio" placeholder="Enter C:D ratio (e.g., 172)">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="c_x_buy" class="form-label">C:X Buy Price</label>
+                    <input type="text" class="form-control" id="c_x_buy" placeholder="Enter C:X buy price (e.g., 3)">
+                </div>
+                <div class="col">
+                    <label for="c_x_sell" class="form-label">C:X Sell Price</label>
+                    <input type="text" class="form-control" id="c_x_sell" placeholder="Enter C:X sell price (e.g., 2)">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="d_x_buy" class="form-label">D:X Buy Price</label>
+                    <input type="text" class="form-control" id="d_x_buy" placeholder="Enter D:X buy price (e.g., 1/52)">
+                </div>
+                <div class="col">
+                    <label for="d_x_sell" class="form-label">D:X Sell Price</label>
+                    <input type="text" class="form-control" id="d_x_sell" placeholder="Enter D:X sell price (e.g., 1/53)">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="calculateExchange()">Calculate</button>
+        </form>
+
+        <div class="mt-4">
+            <h3>Results</h3>
+            <ul class="list-group">
+                <li class="list-group-item" id="cBuyDSellItem"><strong>C买D卖:</strong>
+                    <ul>
+                        <li>汇率: <span id="cBuyDSellRate">-</span></li>
+                        <li>单位买价: <span id="cBuyDSellBuyPrice">-</span></li>
+                        <li>单位卖价: <span id="cBuyDSellSellPrice">-</span></li>
+                        <li>单位获利或亏损: <span id="cBuyDSellProfitLoss">-</span></li>
+                    </ul>
+                </li>
+                <li class="list-group-item" id="cBuyCSellItem"><strong>C买C卖:</strong>
+                    <ul>
+                        <li>汇率: <span id="cBuyCSellRate">-</span></li>
+                        <li>单位买价: <span id="cBuyCSellBuyPrice">-</span></li>
+                        <li>单位卖价: <span id="cBuyCSellSellPrice">-</span></li>
+                        <li>单位获利或亏损: <span id="cBuyCSellProfitLoss">-</span></li>
+                    </ul>
+                </li>
+                <li class="list-group-item" id="dBuyCSellItem"><strong>D买C卖:</strong>
+                    <ul>
+                        <li>汇率: <span id="dBuyCSellRate">-</span></li>
+                        <li>单位买价: <span id="dBuyCSellBuyPrice">-</span></li>
+                        <li>单位卖价: <span id="dBuyCSellSellPrice">-</span></li>
+                        <li>单位获利或亏损: <span id="dBuyCSellProfitLoss">-</span></li>
+                    </ul>
+                </li>
+                <li class="list-group-item" id="dBuyDSellItem"><strong>D买D卖:</strong>
+                    <ul>
+                        <li>汇率: <span id="dBuyDSellRate">-</span></li>
+                        <li>单位买价: <span id="dBuyDSellBuyPrice">-</span></li>
+                        <li>单位卖价: <span id="dBuyDSellSellPrice">-</span></li>
+                        <li>单位获利或亏损: <span id="dBuyDSellProfitLoss">-</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zing9264.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/31/hello-world/" class="article-date">
-  <time datetime="2020-08-30T20:20:14.786Z" itemprop="datePublished">2020-08-31</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/31/hello-world/">Hello World</a>
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+    <script>
+        function evaluateExpression(input) {
+            try {
+                return new Function('return ' + input)();
+            } catch {
+                return NaN;
+            }
+        }
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+        function calculateExchange() {
+            // 获取输入值，并将其转换为数值
+            const c_d_ratio = evaluateExpression(document.getElementById('c_d_ratio').value);
+            const c_x_buy = evaluateExpression(document.getElementById('c_x_buy').value);
+            const c_x_sell = evaluateExpression(document.getElementById('c_x_sell').value);
+            const d_x_buy = evaluateExpression(document.getElementById('d_x_buy').value);
+            const d_x_sell = evaluateExpression(document.getElementById('d_x_sell').value);
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+            if (isNaN(c_d_ratio) || isNaN(c_x_buy) || isNaN(c_x_sell) || isNaN(d_x_buy) || isNaN(d_x_sell)) {
+                alert("Please enter valid numbers or fractions.");
+                return;
+            }
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+            // 将D:X的买价和卖价转换为以C为单位
+            const d_x_buy_in_c = d_x_buy * c_d_ratio;
+            const d_x_sell_in_c = d_x_sell * c_d_ratio;
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+            // 计算C买D卖
+            const c_buy_d_sell_rate = c_x_buy / d_x_sell_in_c;
+            const c_buy_d_sell_profit_loss = d_x_sell_in_c - c_x_buy;
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://zing9264.github.io/2020/08/31/hello-world/" data-id="ckehkbn6d00003otdaoedejva" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+            // 计算C买C卖
+            const c_buy_c_sell_rate = c_x_buy / c_x_sell;
+            const c_buy_c_sell_profit_loss = c_x_sell - c_x_buy;
 
+            // 计算D买C卖
+            const d_buy_c_sell_rate = d_x_buy_in_c / c_x_sell;
+            const d_buy_c_sell_profit_loss = c_x_sell - d_x_buy_in_c;
 
-  
+            // 计算D买D卖
+            const d_buy_d_sell_rate = d_x_buy_in_c / d_x_sell_in_c;
+            const d_buy_d_sell_profit_loss = d_x_sell_in_c - d_x_buy_in_c;
 
+            // 找出最高利润的项目
+            const maxProfit = Math.max(c_buy_d_sell_profit_loss, c_buy_c_sell_profit_loss, d_buy_c_sell_profit_loss, d_buy_d_sell_profit_loss);
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
+            // 重置所有项的高亮样式
+            document.getElementById('cBuyDSellItem').classList.remove('bg-success', 'text-white');
+            document.getElementById('cBuyCSellItem').classList.remove('bg-success', 'text-white');
+            document.getElementById('dBuyCSellItem').classList.remove('bg-success', 'text-white');
+            document.getElementById('dBuyDSellItem').classList.remove('bg-success', 'text-white');
 
-  
-    
+            // 根据最大利润高亮对应的项
+            if (c_buy_d_sell_profit_loss === maxProfit) {
+                document.getElementById('cBuyDSellItem').classList.add('bg-success', 'text-white');
+            } else if (c_buy_c_sell_profit_loss === maxProfit) {
+                document.getElementById('cBuyCSellItem').classList.add('bg-success', 'text-white');
+            } else if (d_buy_c_sell_profit_loss === maxProfit) {
+                document.getElementById('dBuyCSellItem').classList.add('bg-success', 'text-white');
+            } else if (d_buy_d_sell_profit_loss === maxProfit) {
+                document.getElementById('dBuyDSellItem').classList.add('bg-success', 'text-white');
+            }
 
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">彙整</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li></ul>
-    </div>
-  </div>
+            // 显示结果
+            document.getElementById('cBuyDSellRate').textContent = c_buy_d_sell_rate.toFixed(4);
+            document.getElementById('cBuyDSellBuyPrice').textContent = c_x_buy.toFixed(4);
+            document.getElementById('cBuyDSellSellPrice').textContent = d_x_sell_in_c.toFixed(4);
+            document.getElementById('cBuyDSellProfitLoss').textContent = c_buy_d_sell_profit_loss.toFixed(4);
 
+            document.getElementById('cBuyCSellRate').textContent = c_buy_c_sell_rate.toFixed(4);
+            document.getElementById('cBuyCSellBuyPrice').textContent = c_x_buy.toFixed(4);
+            document.getElementById('cBuyCSellSellPrice').textContent = c_x_sell.toFixed(4);
+            document.getElementById('cBuyCSellProfitLoss').textContent = c_buy_c_sell_profit_loss.toFixed(4);
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/08/31/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+            document.getElementById('dBuyCSellRate').textContent = d_buy_c_sell_rate.toFixed(4);
+            document.getElementById('dBuyCSellBuyPrice').textContent = d_x_buy_in_c.toFixed(4);
+            document.getElementById('dBuyCSellSellPrice').textContent = c_x_sell.toFixed(4);
+            document.getElementById('dBuyCSellProfitLoss').textContent = d_buy_c_sell_profit_loss.toFixed(4);
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 Zing<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
+            document.getElementById('dBuyDSellRate').textContent = d_buy_d_sell_rate.toFixed(4);
+            document.getElementById('dBuyDSellBuyPrice').textContent = d_x_buy_in_c.toFixed(4);
+            document.getElementById('dBuyDSellSellPrice').textContent = d_x_sell_in_c.toFixed(4);
+            document.getElementById('dBuyDSellProfitLoss').textContent = d_buy_d_sell_profit_loss.toFixed(4);
+        }
+    </script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
