@@ -12,28 +12,52 @@
         <form id="exchangeForm">
             <div class="row mb-3">
                 <div class="col">
-                    <label for="c_d_ratio" class="form-label">C:D 比率</label>
-                    <input type="text" class="form-control" id="c_d_ratio" placeholder="輸入 C:D 比率 (例如: 172)">
+                    <label for="c_value_for_d" class="form-label">C格 (用D買C)</label>
+                    <input type="text" class="form-control" id="c_value_for_d" placeholder="輸入C格 (例如: 172)">
+                </div>
+                <div class="col">
+                    <label for="d_value_for_c" class="form-label">D格 (用D買C)</label>
+                    <input type="text" class="form-control" id="d_value_for_c" placeholder="輸入D格 (例如: 1)">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <label for="c_x_buy" class="form-label">C:X 買價</label>
-                    <input type="text" class="form-control" id="c_x_buy" placeholder="輸入 C:X 買價 (例如: 3)">
+                    <label for="x_value_for_c_buy" class="form-label">X格 (C買X)</label>
+                    <input type="text" class="form-control" id="x_value_for_c_buy" placeholder="輸入X格 (例如: 8)">
                 </div>
                 <div class="col">
-                    <label for="c_x_sell" class="form-label">C:X 賣價</label>
-                    <input type="text" class="form-control" id="c_x_sell" placeholder="輸入 C:X 賣價 (例如: 2)">
+                    <label for="c_value_for_x_buy" class="form-label">C格 (C買X)</label>
+                    <input type="text" class="form-control" id="c_value_for_x_buy" placeholder="輸入C格 (例如: 1)">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <label for="d_x_buy" class="form-label">D:X 買價</label>
-                    <input type="text" class="form-control" id="d_x_buy" placeholder="輸入 D:X 買價 (例如: 1/52)">
+                    <label for="c_value_for_x_sell" class="form-label">C格 (X買C)</label>
+                    <input type="text" class="form-control" id="c_value_for_x_sell" placeholder="輸入C格 (例如: 1)">
                 </div>
                 <div class="col">
-                    <label for="d_x_sell" class="form-label">D:X 賣價</label>
-                    <input type="text" class="form-control" id="d_x_sell" placeholder="輸入 D:X 賣價 (例如: 1/53)">
+                    <label for="x_value_for_c_sell" class="form-label">X格 (X買C)</label>
+                    <input type="text" class="form-control" id="x_value_for_c_sell" placeholder="輸入X格 (例如: 10)">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="x_value_for_d_buy" class="form-label">X格 (D買X)</label>
+                    <input type="text" class="form-control" id="x_value_for_d_buy" placeholder="輸入X格 (例如: 1600)">
+                </div>
+                <div class="col">
+                    <label for="d_value_for_x_buy" class="form-label">D格 (D買X)</label>
+                    <input type="text" class="form-control" id="d_value_for_x_buy" placeholder="輸入D格 (例如: 1)">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="d_value_for_x_sell" class="form-label">D格 (X買D)</label>
+                    <input type="text" class="form-control" id="d_value_for_x_sell" placeholder="輸入D格 (例如: 1)">
+                </div>
+                <div class="col">
+                    <label for="x_value_for_d_sell" class="form-label">X格 (X買D)</label>
+                    <input type="text" class="form-control" id="x_value_for_d_sell" placeholder="輸入X格 (例如: 2300)">
                 </div>
             </div>
             <button type="button" class="btn btn-primary" onclick="calculateExchange()">計算</button>
@@ -88,48 +112,48 @@
         }
 
         function calculateExchange() {
-            // 獲取輸入值，並將其轉換為數值
-            const c_d_ratio = evaluateExpression(document.getElementById('c_d_ratio').value);
-            const c_x_buy = evaluateExpression(document.getElementById('c_x_buy').value);
-            const c_x_sell = evaluateExpression(document.getElementById('c_x_sell').value);
-            const d_x_buy = evaluateExpression(document.getElementById('d_x_buy').value);
-            const d_x_sell = evaluateExpression(document.getElementById('d_x_sell').value);
+            // 获取输入值，并将其转换为数值
+            const c_d_ratio = evaluateExpression(document.getElementById('c_value_for_d').value) / evaluateExpression(document.getElementById('d_value_for_c').value);
+            const c_x_buy =  evaluateExpression(document.getElementById('c_value_for_x_buy').value)/ evaluateExpression(document.getElementById('x_value_for_c_buy').value)
+            const c_x_sell = evaluateExpression(document.getElementById('c_value_for_x_sell').value) / evaluateExpression(document.getElementById('x_value_for_c_sell').value);
+            const d_x_buy =  evaluateExpression(document.getElementById('d_value_for_x_buy').value)/ evaluateExpression(document.getElementById('x_value_for_d_buy').value)
+            const d_x_sell = evaluateExpression(document.getElementById('d_value_for_x_sell').value) / evaluateExpression(document.getElementById('x_value_for_d_sell').value);
 
             if (isNaN(c_d_ratio) || isNaN(c_x_buy) || isNaN(c_x_sell) || isNaN(d_x_buy) || isNaN(d_x_sell)) {
                 alert("請輸入有效的數字或分數格式。");
                 return;
             }
 
-            // 將D:X的買價和賣價轉換為以C為單位
+            // 将D:X的买价和卖价转换为以C为单位
             const d_x_buy_in_c = d_x_buy * c_d_ratio;
             const d_x_sell_in_c = d_x_sell * c_d_ratio;
 
-            // 計算C買D賣
+            // 计算C买D卖
             const c_buy_d_sell_rate = c_x_buy / d_x_sell_in_c;
             const c_buy_d_sell_profit_loss = d_x_sell_in_c - c_x_buy;
 
-            // 計算C買C賣
+            // 计算C买C卖
             const c_buy_c_sell_rate = c_x_buy / c_x_sell;
             const c_buy_c_sell_profit_loss = c_x_sell - c_x_buy;
 
-            // 計算D買C賣
+            // 计算D买C卖
             const d_buy_c_sell_rate = d_x_buy_in_c / c_x_sell;
             const d_buy_c_sell_profit_loss = c_x_sell - d_x_buy_in_c;
 
-            // 計算D買D賣
+            // 计算D买D卖
             const d_buy_d_sell_rate = d_x_buy_in_c / d_x_sell_in_c;
             const d_buy_d_sell_profit_loss = d_x_sell_in_c - d_x_buy_in_c;
 
-            // 找出最高利潤的項目
+            // 找出最高利润的项目
             const maxProfit = Math.max(c_buy_d_sell_profit_loss, c_buy_c_sell_profit_loss, d_buy_c_sell_profit_loss, d_buy_d_sell_profit_loss);
 
-            // 重置所有項目的高亮樣式
+            // 重置所有项的高亮样式
             document.getElementById('cBuyDSellItem').classList.remove('bg-success', 'text-white');
             document.getElementById('cBuyCSellItem').classList.remove('bg-success', 'text-white');
             document.getElementById('dBuyCSellItem').classList.remove('bg-success', 'text-white');
             document.getElementById('dBuyDSellItem').classList.remove('bg-success', 'text-white');
 
-            // 根據最大利潤高亮對應的項目
+            // 根据最大利润高亮对应的项
             if (c_buy_d_sell_profit_loss === maxProfit) {
                 document.getElementById('cBuyDSellItem').classList.add('bg-success', 'text-white');
             } else if (c_buy_c_sell_profit_loss === maxProfit) {
@@ -140,7 +164,7 @@
                 document.getElementById('dBuyDSellItem').classList.add('bg-success', 'text-white');
             }
 
-            // 顯示結果
+            // 显示结果
             document.getElementById('cBuyDSellRate').textContent = c_buy_d_sell_rate.toFixed(4);
             document.getElementById('cBuyDSellBuyPrice').textContent = c_x_buy.toFixed(4);
             document.getElementById('cBuyDSellSellPrice').textContent = d_x_sell_in_c.toFixed(4);
