@@ -26,12 +26,21 @@
 
   <div class="section">
     <h2>第一階段：抽 W 寵</h2>
+
+    <p>
+      鐵鎚單價（億楓幣）：
+      <input type="number" id="hammerPriceInput" value="10" style="width: 60px;"> 億
+    </p>
+
     <button id="draw1">抽 1 次</button>
     <button id="draw10">抽 10 次</button>
     <button id="draw100">抽 100 次</button>
+
     <p>累積 W 寵（庫存）：<strong><span id="wCount">0</span></strong></p>
     <p>累積 S 寵（庫存）：<strong><span id="sCountInv">0</span></strong></p>
     <p>抽卡未中 次數：<strong><span id="missCount">0</span></strong></p>
+    <p>可兌換鐵鎚數量（每 3 未中 = 1 把）：<strong><span id="hammerCount">0</span></strong></p>
+    <p>鐵鎚總價值：<strong><span id="hammerValue">0</span></strong> 元</p>
     <p>總花費：<strong><span id="totalCost">0</span></strong> 元</p>
   </div>
 
@@ -57,7 +66,6 @@
     let totalSDrawn = 0;
     let totalPDrawn = 0;
     let totalMissCount = 0;
-    let pendingMissCount = 0;
     let totalCost = 0;
     let pFromWW = 0, sFromWW = 0, pFromSW = 0;
 
@@ -75,6 +83,9 @@
     const sWWCt = document.getElementById('sFromWW');
     const sCt = document.getElementById('sCount');
     const pSWCt = document.getElementById('pFromSW');
+    const hammerInput = document.getElementById('hammerPriceInput');
+    const hammerCountEl = document.getElementById('hammerCount');
+    const hammerValueEl = document.getElementById('hammerValue');
 
     function updateButtons() {
       btnCombineWW.disabled = wCount < 2;
@@ -90,6 +101,13 @@
       sCt.textContent = sCount;
       missCt.textContent = totalMissCount;
       costCt.textContent = totalCost;
+
+      const hammerPrice = parseFloat(hammerInput.value || 0); // 億楓幣
+      const hammerCount = Math.floor(totalMissCount / 3);
+      const hammerValue = (hammerPrice * hammerCount) * 8;
+
+      hammerCountEl.textContent = hammerCount;
+      hammerValueEl.textContent = hammerValue.toFixed(2);
     }
 
     function draw(n) {
@@ -100,11 +118,6 @@
           totalWDrawn++;
         } else {
           totalMissCount++;
-          pendingMissCount++;
-          if (pendingMissCount >= 3) {
-            totalCost -= 50;
-            pendingMissCount -= 3;
-          }
         }
       }
       updateSummary();
@@ -146,6 +159,8 @@
       updateSummary();
       updateButtons();
     };
+
+    hammerInput.addEventListener('input', updateSummary);
   </script>
 </body>
 </html>
